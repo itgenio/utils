@@ -67,3 +67,11 @@ export function roundFloat(num: number, maxDigits: number) {
   // eslint-disable-next-line no-implicit-coercion
   return +num.toFixed(maxDigits);
 }
+
+const EPSILON = 0.0001;
+
+export function isNumbersEq(compareWith: number, ...nums: number[]) {
+  if (nums.length === 0) return false;
+
+  return nums.every(n => Math.abs(Math.abs(n) - compareWith) < EPSILON);
+}
