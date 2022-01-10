@@ -17,6 +17,7 @@
     "esModuleInterop": true,
     "preserveSymlinks": true,
     "downlevelIteration": true,
+    "rootDir": "src",
     "baseUrl": ".",
     "outDir": "dist",
   },
