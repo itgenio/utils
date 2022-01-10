@@ -5,25 +5,29 @@ export function getRandomInt(min: number, max: number): number {
 
 /**
  * Округляет число в меньшую сторону до половины
- * @param  {number} value - число
- * @returns  {number} - округленное число
+ * @param value - число
+ * @returns - округленное число
  */
 export function floorToHalf(value: number): number {
   const temp = Math.floor(value);
   value -= temp;
+
   if (value >= 0.5) return temp + 0.5;
+
   return temp;
 }
 
 /**
  * Округляет число в большую сторону до половины
- * @param  {number} value - число
- * @returns  {number} - округленное число
+ * @param value - число
+ * @returns - округленное число
  */
 export function ceilToHalf(value: number): number {
   const temp = Math.ceil(value);
   value -= temp;
+
   if (value <= -0.40001) return temp - 0.5;
+
   return temp;
 }
 
@@ -60,5 +64,6 @@ export function clamp01(num: number): number {
  * @param maxDigits - максимальное количество чисел после запятой
  */
 export function roundFloat(num: number, maxDigits: number) {
+  // eslint-disable-next-line no-implicit-coercion
   return +num.toFixed(maxDigits);
 }

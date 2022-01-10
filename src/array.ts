@@ -2,6 +2,7 @@
  * @deprecated
  */
 // @ts-ignore
+// eslint-disable-next-line no-extend-native
 Array.prototype.getUnique = function () {
   return unique(this);
 };
@@ -10,6 +11,7 @@ Array.prototype.getUnique = function () {
  * @deprecated
  */
 // @ts-ignore
+// eslint-disable-next-line no-extend-native
 Array.prototype.getLastOrNull = function () {
   return lastOrNull(this);
 };
@@ -25,13 +27,12 @@ export function lastOrNull<T extends any[]>(arr: T) {
   return arr[arr.length - 1];
 }
 
-export const flatArray = <T extends any[]>(arr: T[]): T => {
-  return arr.reduce(
+export const flatArray = <T extends any[]>(arr: T[]): T =>
+  arr.reduce(
     (acc, val) =>
       Array.isArray(val) ? acc.concat(flatArray(val)) : acc.concat(val),
     [] as any[]
   ) as T;
-};
 
 /**
  * Функция сортировки объектов по заданному порядку значений определенного поля
@@ -48,7 +49,7 @@ export const sortDocumentsByFieldOrder = <
   a: TObj,
   b: TObj,
   fieldOrder: TFieldOrder,
-  getFieldFunc: (obj: TObj) => any
+  getFieldFunc: (_obj: TObj) => any
 ) => {
   const aFieldValue = getFieldFunc(a);
   const bFieldValue = getFieldFunc(b);
@@ -67,8 +68,8 @@ export const sortDocumentsByFieldOrder = <
  * @param {...Function} getScoreFunctions - Функции, которые будут вызваны для элементов. Возвращаемое значение идентично возвращаемому значению compareFunction, передаваемой в sort(). При сравнении будут вызываться друг за другом, пока не будет получено ненулевое значение, либо функции не закончатся
  * @return {Array}
  */
-export const sortByFunctions = (arr: any[], ...getScoreFunctions: any[]) => {
-  return arr.sort((a, b) => {
+export const sortByFunctions = (arr: any[], ...getScoreFunctions: any[]) =>
+  arr.sort((a, b) => {
     for (const getScore of getScoreFunctions) {
       const compareResult = getScore(a) - getScore(b);
 
@@ -77,7 +78,6 @@ export const sortByFunctions = (arr: any[], ...getScoreFunctions: any[]) => {
 
     return 0;
   });
-};
 
 /**
  * Конвертировать массив объектов в словарь
@@ -94,13 +94,12 @@ export const convertToDict = <
   arr: T[],
   getKey: (_: T) => TKey,
   getVal?: (_: T) => TVal
-): Record<TKey, TVal> => {
-  return arr.reduce((dict, el) => {
+): Record<TKey, TVal> =>
+  arr.reduce((dict, el) => {
     dict[getKey(el)] = getVal ? getVal(el) : (el as unknown as TVal);
 
     return dict;
   }, {} as Record<TKey, TVal>);
-};
 
 /**
  * Конвертировать словарь в массив объектов
@@ -110,7 +109,7 @@ export const convertToDict = <
  */
 export const convertDictToArray = <T extends Record<string, any>, R>(
   dict: T,
-  getKeys: (key: string, value: any) => R
+  getKeys: (_key: string, _value: any) => R
 ): R[] => {
   const keys = Object.keys(dict);
 
@@ -118,9 +117,7 @@ export const convertDictToArray = <T extends Record<string, any>, R>(
     keys.map(key => {
       const values = Array.isArray(dict[key]) ? dict[key] : [dict[key]];
 
-      return values.map((value: any) => {
-        return getKeys(key, value);
-      });
+      return values.map((value: any) => getKeys(key, value));
     })
   );
 };
@@ -138,9 +135,9 @@ export const chunkArray = <T extends any[], S extends Unboxed<T>>(
   array: T,
   size: number
 ) => {
-  const newArray: S[][] = [...Array(+Math.ceil(array.length / size))].map(
-    () => []
-  );
+  const newArray: S[][] = [
+    ...Array(Number(Math.ceil(array.length / size))),
+  ].map(() => []);
 
   let newArrayIndex = 0;
 
@@ -157,10 +154,10 @@ export const chunkArray = <T extends any[], S extends Unboxed<T>>(
 
 /**
  * Конвертировать массив объектов в словарь и объединить по ключу
- * @param {T[]} array - Исходный массив
- * @param {Function} getKey - Функция для получения ключа из объекта
- * @param {Function} [getVal] - Функция для преобразования сгруппированных элементов массива. Если не передана, возвращаются сгруппированные элементы
- * @returns {Record<TKey, TVal>} - Record<ключ, элементы сгруппированные по этому ключу (если передедан getVal, то модифицированные через getVal)>
+ * @param array - Исходный массив
+ * @param getKey - Функция для получения ключа из объекта
+ * @param [getVal] - Функция для преобразования сгруппированных элементов массива. Если не передана, возвращаются сгруппированные элементы
+ * @returns - Record<ключ, элементы сгруппированные по этому ключу (если передедан getVal, то модифицированные через getVal)>
  */
 export const groupByPropertyToDict = <
   T extends {},
@@ -172,7 +169,7 @@ export const groupByPropertyToDict = <
   getVal?: (_: T[], __: TKey) => TVal
 ): Record<TKey, TVal> => {
   // TODO: types
-  const result: Record<any, any> = {};
+  const result: Record<any, any[]> = {};
 
   for (const element of array) {
     const key = getKey(element);
@@ -184,15 +181,15 @@ export const groupByPropertyToDict = <
     }
   }
 
-  if (!getVal) return result;
+  if (!getVal) return result as any;
 
-  Object.values(result).forEach(array => {
-    const key = getKey(array[0]);
+  Object.values(result).forEach(arr => {
+    const key = getKey(arr[0]);
 
-    result[key] = getVal(array, key);
+    result[key] = getVal(arr, key) as any;
   });
 
-  return result;
+  return result as any;
 };
 
 export const moveElementInArray = <T extends Array<any>>(
@@ -215,12 +212,11 @@ export const moveElementInArray = <T extends Array<any>>(
 export const arrayDifference = <T>(
   arrA: T[],
   arrB: T[],
-  equalFunc?: <P extends T>(a: P, b: P) => boolean
+  equalFunc?: <P extends T>(_a: P, _b: P) => boolean
 ): T[] => {
   const isEqual = equalFunc || ((a, b) => a === b);
-  return arrA.filter(a => {
-    return !arrB.some(b => isEqual(a, b));
-  });
+
+  return arrA.filter(a => !arrB.some(b => isEqual(a, b)));
 };
 
 /**
@@ -233,8 +229,9 @@ export const arrayDifference = <T>(
 export const arrayIntersection = <T>(
   arrA: T[],
   arrB: T[],
-  equalFunc?: <P extends T>(a: P, b: P) => boolean
+  equalFunc?: <P extends T>(_a: P, _b: P) => boolean
 ): T[] => {
   const isEqual = equalFunc || ((a, b) => a === b);
+
   return [...new Set(arrA.filter(a => arrB.some(b => isEqual(a, b))))];
 };

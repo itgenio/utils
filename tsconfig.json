@@ -19,7 +19,7 @@
     "downlevelIteration": true,
     "rootDir": "src",
     "baseUrl": ".",
-    "outDir": "dist",
+    "outDir": "dist"
   },
   "include": ["src/"],
   "exclude": ["node_modules", "dist"]

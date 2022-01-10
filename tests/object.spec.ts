@@ -4,8 +4,8 @@ import {
   getKeyFromNumericEnum,
 } from '../src/object';
 
-describe(`objectUtils.isObjectHasNonFalseyValue`, () => {
-  it(`Ложные значения возвращают false`, () => {
+describe('objectUtils.isObjectHasNonFalseyValue', () => {
+  it('Ложные значения возвращают false', () => {
     const obj = {
       nullK: null,
       falseK: false,
@@ -18,14 +18,14 @@ describe(`objectUtils.isObjectHasNonFalseyValue`, () => {
     assert.isFalse(isObjectHasNonFalseyValue(obj));
   });
 
-  it(`Правдивые значения возвращают true`, () => {
+  it('Правдивые значения возвращают true', () => {
     assert.isTrue(isObjectHasNonFalseyValue({ key: [] }));
     assert.isTrue(isObjectHasNonFalseyValue({ key: true }));
     assert.isTrue(isObjectHasNonFalseyValue({ key: 1 }));
     assert.isTrue(isObjectHasNonFalseyValue({ key: '1' }));
   });
 
-  it(`Поиск ведется также по вложенным объектам`, () => {
+  it('Поиск ведется также по вложенным объектам', () => {
     const falseObj = {
       innerObj: {
         nullK: null,
@@ -45,14 +45,15 @@ describe(`objectUtils.isObjectHasNonFalseyValue`, () => {
     assert.isTrue(isObjectHasNonFalseyValue({ innerObj: { key: '1' } }));
   });
 
-  it(`Пустой объект возвращает false`, () => {
+  it('Пустой объект возвращает false', () => {
     assert.isFalse(isObjectHasNonFalseyValue({}));
     assert.isFalse(isObjectHasNonFalseyValue({ innerObj: {} }));
   });
 });
 
-describe(`objectUtils.getKeyFromNumericEnum`, () => {
+describe('objectUtils.getKeyFromNumericEnum', () => {
   it('Возвращает ключ из enum по значению', () => {
+    // eslint-disable-next-line no-shadow
     enum Test {
       a = 1,
     }
@@ -61,6 +62,7 @@ describe(`objectUtils.getKeyFromNumericEnum`, () => {
   });
 
   it('Возвращает undefined, если передать значение вне enum', () => {
+    // eslint-disable-next-line no-shadow
     enum Test {
       a = 1,
     }

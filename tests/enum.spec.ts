@@ -1,8 +1,8 @@
 import { assert } from 'chai';
 import { FillEnum, FillEnumOptions } from '../src/enum';
 
-describe('enumHelper', function () {
-  it(`check as key`, function () {
+describe('enumHelper', () => {
+  it('check as key', () => {
     const testEnum = {
       a: 'a',
       b: 'b',
@@ -23,7 +23,7 @@ describe('enumHelper', function () {
     });
   });
 
-  it(`check as error`, function () {
+  it('check as error', () => {
     const testEnum = {
       a: 'a',
       b: 'b',

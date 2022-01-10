@@ -1,9 +1,9 @@
 import { assert } from 'chai';
 import { floorToHalf, ceilToHalf, calcMedian, clamp } from '../src/number';
 
-describe('number utils', function () {
-  describe('floorToHalf', function () {
-    it(`value is floor correctly`, function () {
+describe('number utils', () => {
+  describe('floorToHalf', () => {
+    it('value is floor correctly', () => {
       const zero = [0.1, 0.2, 0.3, 0.4, 0.4999];
 
       zero.forEach(n => {
@@ -24,8 +24,8 @@ describe('number utils', function () {
     });
   });
 
-  describe('ceilToHalf', function () {
-    it(`value is ceil correctly`, function () {
+  describe('ceilToHalf', () => {
+    it('value is ceil correctly', () => {
       const half = [0.1, 0.2, 0.3, 0.4, 0.4999];
 
       half.forEach(n => {
@@ -40,8 +40,8 @@ describe('number utils', function () {
     });
   });
 
-  describe('calcMedian', function () {
-    it(`Медиана высчитана верно`, function () {
+  describe('calcMedian', () => {
+    it('Медиана высчитана верно', () => {
       const nums1 = [1, 3, 5, 7];
       const nums2 = [3, 5, 5, 9, 11];
 
@@ -50,17 +50,17 @@ describe('number utils', function () {
     });
   });
 
-  describe('clamp', function () {
-    it(`Число между min и max`, function () {
+  describe('clamp', () => {
+    it('Число между min и max', () => {
       assert.strictEqual(clamp(2, 1, 3), 2);
     });
 
-    it(`Число меньше или равно min`, function () {
+    it('Число меньше или равно min', () => {
       assert.strictEqual(clamp(-1, 1, 3), 1);
       assert.strictEqual(clamp(1, 1, 3), 1);
     });
 
-    it(`Число больше или равно max`, function () {
+    it('Число больше или равно max', () => {
       assert.strictEqual(clamp(4, 1, 3), 3);
       assert.strictEqual(clamp(3, 1, 3), 3);
     });

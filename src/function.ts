@@ -30,5 +30,6 @@ export const backoff = async <T = any>(
   }
 
   await wait(delay);
+
   return await backoff(func, isOk, retries - 1, delay * 2);
 };

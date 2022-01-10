@@ -14,7 +14,10 @@ export class ComputedCache<T> implements IComputedCache<T> {
   private hasResult = false;
   private nextRun = new Date().getTime();
 
-  constructor(private readonly computation: () => T, public readonly ttl: number = 0) {}
+  constructor(
+    private readonly computation: () => T,
+    public readonly ttl: number = 0
+  ) {}
 
   get isTTLExpired(): boolean {
     return this.ttl > 0 && new Date().getTime() > this.nextRun;

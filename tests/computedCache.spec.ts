@@ -1,8 +1,8 @@
 import { assert } from 'chai';
 import { ComputedCache } from '../src/computedCache';
 
-describe(`computedCache`, () => {
-  it(`сохраняем навсегда строку`, () => {
+describe('computedCache', () => {
+  it('сохраняем навсегда строку', () => {
     let counter = 0;
 
     const cache = new ComputedCache(() => `${counter + 1}`);
@@ -14,7 +14,7 @@ describe(`computedCache`, () => {
     assert.equal(cache.get(), '1');
   });
 
-  it(`сохраняем строку с TTL`, done => {
+  it('сохраняем строку с TTL', done => {
     let counter = 0;
 
     const cache = new ComputedCache(() => `${counter + 1}`, 10);
@@ -34,7 +34,7 @@ describe(`computedCache`, () => {
     }, 50);
   });
 
-  it(`сохраняем объект`, () => {
+  it('сохраняем объект', () => {
     const user = { name: 'ivan' };
 
     const cache = new ComputedCache(() => user);
