@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "CommonJS",
+    "lib": ["esnext"],
+    "allowJs": true,
+    "checkJs": false,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": false,
+    "noFallthroughCasesInSwitch": false,
+    "moduleResolution": "node",
+    "types": ["node", "mocha"],
+    "esModuleInterop": true,
+    "preserveSymlinks": true,
+    "downlevelIteration": true,
+    "baseUrl": ".",
+    "outDir": "dist",
+  },
+  "include": ["src/"],
+  "exclude": ["node_modules", "dist"]
+}

@@ -1,0 +1,50 @@
+{
+  "name": "@itgenio/utils",
+  "version": "0.0.2",
+  "description": "",
+  "main": "dist/index.js",
+  "source": "src/index.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./*": "./dist/*.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "mocha",
+    "lint": "eslint ./**/*.js",
+    "tsc": "tsc --noEmit",
+    "build": "tsc",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itgenio/utils.git"
+  },
+  "author": "Alex So",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/itgenio/utils/issues"
+  },
+  "homepage": "https://github.com/itgenio/utils#readme",
+  "dependencies": {
+    "lodash": "^4.17.19"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.16.5",
+    "@babel/register": "^7.16.0",
+    "@types/lodash": "^4.14.178",
+    "@types/meteor": "^1.4.87",
+    "@types/chai": "^4.2.14",
+    "@types/mocha": "^8.0.0",
+    "chai": "^4.2.0",
+    "eslint": "^8.6.0",
+    "eslint-config-es": "^0.8.12",
+    "eslint-plugin-babel": "^5.3.1",
+    "mocha": "^9.1.3",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.4"
+  }
+}
