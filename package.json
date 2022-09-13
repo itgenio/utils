@@ -1,6 +1,6 @@
 {
   "name": "@itgenio/utils",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,6 +10,7 @@
   ],
   "scripts": {
     "test": "mocha",
+    "test:watch": "mocha --watch",
     "lint": "eslint ./**/*.ts",
     "tsc": "tsc --noEmit",
     "format:check": "prettier --check .",

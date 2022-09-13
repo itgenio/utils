@@ -1,3 +1,5 @@
+import { getNumericEnumValues } from './object';
+
 export const FillEnumOptions = {
   asKey: 0,
   asError: 1,
@@ -18,3 +20,6 @@ export const FillEnum = (
 
   return enumObject;
 };
+
+export const getFullEnumBitmask = (enumObject: Record<string, unknown>) =>
+  getNumericEnumValues(enumObject).reduce((bitmask, flag) => bitmask | flag, 0);
