@@ -6,6 +6,9 @@ export const createBinaryMask = (...flags: number[]) =>
 export const isFlagInBinaryMask = (mask: Bitmask, flag: number) =>
   (mask & flag) === flag;
 
+export const isMasksIntersect = (maskA: Bitmask, maskB: Bitmask) =>
+  (maskA & maskB) !== 0;
+
 export const addFlagToMask = (mask: Bitmask, flag: number) => mask | flag;
 
 export const removeFlagFromMask = (mask: Bitmask, flag: number) =>
