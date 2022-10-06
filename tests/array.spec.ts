@@ -1,8 +1,9 @@
 import { assert } from 'chai';
 import {
-  sortDocumentsByFieldOrder,
+  asyncFilter,
   chunkArray,
   convertDictToArray,
+  sortDocumentsByFieldOrder,
 } from '../src/array';
 
 describe('array', () => {
@@ -90,6 +91,90 @@ describe('array', () => {
       ];
 
       assert.deepEqual(array, result);
+    });
+  });
+
+  describe('asyncFilter', () => {
+    it('Отфильтрован массив', async () => {
+      const array = [
+        { value: 1, filter: Promise.resolve(true) },
+        { value: 2, filter: Promise.resolve(false) },
+        {
+          value: 3,
+          filter: new Promise<boolean>(resolve =>
+            setTimeout(() => resolve(true), 0)
+          ),
+        },
+        {
+          value: 4,
+          filter: new Promise<boolean>(resolve =>
+            setTimeout(() => resolve(false), 0)
+          ),
+        },
+        {
+          value: 5,
+          filter: true,
+        },
+        {
+          value: 6,
+          filter: false,
+        },
+      ];
+
+      const filteredArray = await asyncFilter(array, item => item.filter);
+
+      assert.deepEqual(
+        filteredArray.map(item => item.value),
+        [1, 3, 5]
+      );
+    });
+
+    it('Учитывается порядок в исходном массиве', async () => {
+      const array = [
+        {
+          value: 1,
+          filter: new Promise<boolean>(resolve =>
+            setTimeout(() => resolve(true), 10)
+          ),
+        },
+        {
+          value: 2,
+          filter: new Promise<boolean>(resolve =>
+            setTimeout(() => resolve(true), 5)
+          ),
+        },
+      ];
+
+      const filteredArray = await asyncFilter(array, item => item.filter);
+
+      assert.deepEqual(
+        filteredArray.map(item => item.value),
+        [1, 2]
+      );
+    });
+
+    it('Ошибки в промисах не ломают фильтрацию', async () => {
+      const array = [
+        {
+          value: 1,
+          filter: new Promise<boolean>((resolve, reject) =>
+            setTimeout(() => reject(new Error()), 0)
+          ),
+        },
+        {
+          value: 2,
+          filter: new Promise<boolean>(resolve =>
+            setTimeout(() => resolve(true), 0)
+          ),
+        },
+      ];
+
+      const filteredArray = await asyncFilter(array, item => item.filter);
+
+      assert.deepEqual(
+        filteredArray.map(item => item.value),
+        [2]
+      );
     });
   });
 });

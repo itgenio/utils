@@ -235,3 +235,20 @@ export const arrayIntersection = <T>(
 
   return [...new Set(arrA.filter(a => arrB.some(b => isEqual(a, b))))];
 };
+
+/**
+ * Асинхронный фильтр: может принимать асинхронные функции для фильтрации.
+ * Резолвится, когда промисы будут выполнены для всех элементов.
+ */
+export const asyncFilter = async <T>(
+  array: T[],
+  callback: (item: T, i: number, arr: T[]) => boolean | Promise<boolean>
+) => {
+  const result = await Promise.allSettled(array.map(callback));
+
+  return array.filter((_, index) => {
+    const settled = result[index];
+
+    return settled.status === 'fulfilled' && settled.value;
+  });
+};
