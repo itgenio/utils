@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es6",
     "module": "CommonJS",
-    "lib": ["esnext"],
+    "lib": ["esnext", "dom"],
     "allowJs": true,
     "checkJs": false,
     "strict": true,
