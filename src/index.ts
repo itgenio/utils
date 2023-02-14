@@ -8,3 +8,5 @@ export * from './number';
 export * from './object';
 export * from './promise';
 export * from './files';
+export * from './scripts';
+export * from './measure';
